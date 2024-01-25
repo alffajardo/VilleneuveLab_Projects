@@ -18,7 +18,7 @@ PAD_PET="/project/rrg-villens/dataset/PreventAD/pet/derivatives/vlpp_preproc_202
 
 # define name of the warp file 
 
-warp_name=${subject}_${tracer}_${session}_anat2tpl_Warp.nii.gz
+warp_name=${subject}_${tracer}_${session}_anat2tpl_Warp.nii
 
 # define the correct pet file
 if [ "$tracer" == "TAU" ]; then
@@ -97,7 +97,7 @@ matlabbatch{1}.spm.spatial.normalise.write.woptions.prefix = '2MNI_';
 % run the matlab
 spm_jobman('run', matlabbatch);" | \
 sed "s/PET_PATH/${tmp_dir}/${pet_name}/g" | \
-sed "s/WARP_PATH/${tmp_dir}/${warp_name}"
+sed -s  "s/WARP_PATH/${tmp_dir}/${warp_name}"
 
 
 exit 0 
