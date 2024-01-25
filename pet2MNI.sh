@@ -99,6 +99,12 @@ spm_jobman('run', matlabbatch);" | \
 sed "s/PET_PATH/${pet_name}/g" | \
 sed "s/WARP_PATH/${warp_name}/g" > ${subject}_${tracer}_${session}_pet2mni.m
 
-cat ${subject}_${tracer}_${session}_pet2mni.m
+#cat ${subject}_${tracer}_${session}_pet2mni.m
+
+# Execute the matlab batch
+
+
+matlab -batch "${subject}_${tracer}_${session}_pet2mni.m"
+
 
 exit 0 
