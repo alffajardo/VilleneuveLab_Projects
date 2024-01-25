@@ -69,10 +69,10 @@ echo "%% A matlab script to normalise to MNI space
 
 % define the path to the  nifti image
 
-pet_file = PET_PATH
+pet_file = 'PET_PATH'
 % define the path to the warp (transformation params ) nifti file
 
-warp_file = WARP_PATH
+warp_file = 'WARP_PATH'
 
 % Inicialize SPM batch job
 spm('Defaults', 'PET');
@@ -97,7 +97,8 @@ matlabbatch{1}.spm.spatial.normalise.write.woptions.prefix = '2MNI_';
 % run the matlab
 spm_jobman('run', matlabbatch);" | \
 sed "s/PET_PATH/${pet_name}/g" | \
-sed "s/WARP_PATH/${warp_name}/g"
+sed "s/WARP_PATH/${warp_name}/g" > ${subject}_${tracer}_${session}_pet2mni.m
 
+cat ${subject}_${tracer}_${session}_pet2mni.m
 
 exit 0 
