@@ -40,7 +40,7 @@ cd $tmp_dir
 
 # find the path to PET 
 
-pet_path=$(find $Pad_PET -name $pet_name)
+pet_path=$(find $PAD_PET -name "$pet_name")
 
 echo $pet_path
 
