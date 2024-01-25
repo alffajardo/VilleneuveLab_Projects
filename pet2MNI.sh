@@ -59,7 +59,7 @@ echo
 
 cp $pet_path $warp_path -t  $PWD
 
-gunzip *.nii.gz
+gunzip -f  *.nii.gz
 
 
 
