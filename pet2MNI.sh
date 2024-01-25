@@ -104,7 +104,7 @@ sed "s/WARP_PATH/${warp_name}/g" > ${subject}_${tracer}_${session}_pet2mni.m
 # Execute the matlab batch
 
 
-matlab -batch "${subject}_${tracer}_${session}_pet2mni.m"
+matlab -batch "run ${subject}_${tracer}_${session}_pet2mni.m"
 
 
 exit 0 
