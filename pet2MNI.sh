@@ -6,8 +6,8 @@
 # Define subject ID
 
 subject=$1
-session=$2 # ses-01 or ses-02
-tracer=$3 # NAV or TAU
+tracer=$2 # NAV or TAU
+session=$3 # ses-01 or ses-02
 
 
 
@@ -30,6 +30,7 @@ elif [ "$tracer" == "NAV" ]; then
 fi
 
 echo $pet_name
+echo $warp_name
 
 
 # Create temporal directory
@@ -46,7 +47,7 @@ cd $tmp_dir
 pet_path=$(find $PAD_PET -name "$pet_name")
 
 # find the warp file
-warp_path=$(find $PAD_PET -name "warp_name")
+warp_path=$(find $PAD_PET -name "$warp_name")
 
 echo ++ PET: $pet_path
 echo ++ WARP: $warp_path
