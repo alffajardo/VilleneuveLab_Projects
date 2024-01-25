@@ -18,11 +18,11 @@ PAD_PET="/project/rrg-villens/dataset/PreventAD/pet/derivatives/vlpp_preproc_202
 # define the correct pet file
 if [ "$tracer" == "TAU" ]; then
 
-    pet_name="${subject}_${tracer}_${session}_pet_time-4070space-anat_ref-infcereg_suvr.nii.gz"
+    pet_name="${subject}_${tracer}_${session}_pet_time-4070_space-anat_ref-infcereg_suvr.nii.gz"
 
 elif [ "$tracer" == "NAV" ]; then
 
-    pet_name="${subject}_${tracer}_${session}_pet_time-4070space-anat_ref-cerebellumCortex_suvr.nii.gz"
+    pet_name="${subject}_${tracer}_${session}_pet_time-4070_space-anat_ref-cerebellumCortex_suvr.nii.gz"
 fi
 
 echo $pet_name
