@@ -97,14 +97,18 @@ matlabbatch{1}.spm.spatial.normalise.write.woptions.prefix = '2MNI_';
 % run the matlab
 spm_jobman('run', matlabbatch);" | \
 sed "s/PET_PATH/${pet_name}/g" | \
-sed "s/WARP_PATH/${warp_name}/g" > ${subject}_${tracer}_${session}_pet2mni.m
+sed "s/WARP_PATH/${warp_name}/g" > tmp.m
 
 #cat ${subject}_${tracer}_${session}_pet2mni.m
 
 # Execute the matlab batch
 
 
-matlab -batch "run ${subject}_${tracer}_${session}_pet2mni.m"
+matlab -batch "run tmp.m"
+
+# rename tmp file 
+
+mv tmp ${subject}_${tracer}_${session}_pet2mni.m
 
 
 exit 0 
