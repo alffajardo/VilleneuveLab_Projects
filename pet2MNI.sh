@@ -38,7 +38,7 @@ echo $warp_name
 
 workdir=$PWD
 
-tmp_dir=tmp.${subject}_${tracer}_${session}
+tmp_dir=${PWD}/tmp.${subject}_${tracer}_${session}
 
 mkdir $tmp_dir
 cd $tmp_dir 
