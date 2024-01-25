@@ -96,8 +96,8 @@ matlabbatch{1}.spm.spatial.normalise.write.woptions.prefix = '2MNI_';
 
 % run the matlab
 spm_jobman('run', matlabbatch);" | \
-sed "s/PET_PATH/${pet_name}/g" | \
-sed -  "s/WARP_PATH/${warp_name}"
+sed -e "s/PET_PATH/${pet_name}/g" | \
+sed -e  "s/WARP_PATH/${warp_name}"
 
 
 exit 0 
