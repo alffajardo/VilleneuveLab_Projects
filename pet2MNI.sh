@@ -108,7 +108,13 @@ matlab -batch "run tmp.m"
 
 # rename tmp file 
 
-mv tmp ${subject}_${tracer}_${session}_pet2mni.m
+mv tmp.m ${subject}_${tracer}_${session}_pet2mni.m
+
+# copy the outputs to the working directory
+
+cp *.m 2MNI* -t  $workdir
+cd ..
+rm $tmp_dir
 
 
 exit 0 
