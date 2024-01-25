@@ -42,4 +42,6 @@ cd $tmp_dir
 
 pet_path=$(find $Pad_PET -name "$")
 
+echo $pet_path
+
 exit 0 
