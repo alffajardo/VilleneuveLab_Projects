@@ -15,6 +15,10 @@ tracer=$3 # NAV or TAU
 PAD_PET="/project/rrg-villens/dataset/PreventAD/pet/derivatives/vlpp_preproc_2022/Nov2023"
 
 
+# define name of the warp file 
+
+warp_name=${subject}_${tracer}_${session}_anat2tpl_Warp.nii.gz
+
 # define the correct pet file
 if [ "$tracer" == "TAU" ]; then
 
@@ -26,7 +30,6 @@ elif [ "$tracer" == "NAV" ]; then
 fi
 
 echo $pet_name
-
 
 
 # Create temporal directory
@@ -42,6 +45,22 @@ cd $tmp_dir
 
 pet_path=$(find $PAD_PET -name "$pet_name")
 
-echo $pet_path
+# find the warp file
+warp_path=$(find $PAD_PET -name "warp_name")
+
+echo ++ PET: $pet_path
+echo ++ Warp: $warp_path
+echo 
+sleep 1.2 
+echo 
+
+# copy and decompressed the files 
+
+cp $pet_path $warp_path -t  $PWD
+
+gunzip *.nii.gz
+
+
+
 
 exit 0 
