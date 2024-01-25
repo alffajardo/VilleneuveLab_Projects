@@ -49,7 +49,7 @@ pet_path=$(find $PAD_PET -name "$pet_name")
 warp_path=$(find $PAD_PET -name "warp_name")
 
 echo ++ PET: $pet_path
-echo ++ Warp: $warp_path
+echo ++ WARP: $warp_path
 echo 
 sleep 1.2 
 echo 
