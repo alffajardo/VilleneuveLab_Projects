@@ -14,13 +14,12 @@ echo
 sleep 1s
 
 
-
 # Compulsory arguments. mak sure this is all correct before running the script
 Subject_id=$1 # Subject ID
-tracer=TAU
-Normalized_data_dir=/project/ctb-villens/projects/PreventAD/pet_normalised_scaled_vlpp
+tracer=NAV
+Normalized_data_dir=/scratch/afajardo/aRC_maps/pet2MNI
 
-work_dir=/project/ctb-villens/projects/PreventAD/pet_longitudinal_slopes
+work_dir=$PWD
 output_dir=${work_dir}/${tracer}_$(date +%Y_%m_%d)
 
 date=$(date)
@@ -82,7 +81,7 @@ matlabbatch{1}.spm.util.imcalc.input = {
                                         '$session1,1'
                                         '$session2,1'
                                         };
-matlabbatch{1}.spm.util.imcalc.output = 'Rate_change_${Subject_id}_${tracer}_ref_infcereb';
+matlabbatch{1}.spm.util.imcalc.output = 'Rate_change_${Subject_id}_${tracer}';
 matlabbatch{1}.spm.util.imcalc.outdir = {'$output_dir'};
 matlabbatch{1}.spm.util.imcalc.expression = '(i2-i1)/$years';
 matlabbatch{1}.spm.util.imcalc.var = struct('name', {}, 'value', {});
