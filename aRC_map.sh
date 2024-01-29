@@ -45,6 +45,12 @@ session1=$(find $Normalized_data_dir -name "2MNI_${Subject_id}_${tracer}_ses-01*
 session2=$(find $Normalized_data_dir -name "2MNI_${Subject_id}_${tracer}_ses-02*.nii*" | cat | head -n 1)
 
 ####
+if [ "$tracer" == "NAV" ]; then
+	output_name=aRC_${Subject_id}_NAV_ref-CerebellumCortex
+
+elif [ "$tracer" == "TAU" ]; then
+	output_name=aRC_${Subject_id}_TAU_ref-infcereg
+fi
 
 echo -e  "\e[6;37m++ Summary:\e[0m"
 echo -e "\e[3;37m++ Date: $date
@@ -54,7 +60,9 @@ echo -e "\e[3;37m++ Date: $date
 ++ PET Scan Session 1: $(basename $session1)
 ++ PET Scan Session 2: $(basename $session2)
 ++ Years between PET scan: $years
+++ Output name: $output_name
 ++ Output Directory: $output_dir\e[0m"
+
 
 if    [  -z $session1   ]  ||  [  -z $session2 ] ; then
 echo
@@ -81,7 +89,7 @@ matlabbatch{1}.spm.util.imcalc.input = {
                                         '$session1,1'
                                         '$session2,1'
                                         };
-matlabbatch{1}.spm.util.imcalc.output = 'Rate_change_${Subject_id}_${tracer}';
+matlabbatch{1}.spm.util.imcalc.output = '$output_name';
 matlabbatch{1}.spm.util.imcalc.outdir = {'$output_dir'};
 matlabbatch{1}.spm.util.imcalc.expression = '(i2-i1)/$years';
 matlabbatch{1}.spm.util.imcalc.var = struct('name', {}, 'value', {});
