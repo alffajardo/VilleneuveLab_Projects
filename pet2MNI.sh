@@ -114,7 +114,7 @@ mv tmp.m ${subject}_${tracer}_${session}_pet2mni.m
 
 cp *.m 2MNI* -t  $workdir
 cd ..
-rm -rf $tmp_dir
+#rm -rf $tmp_dir
 
 
 exit 0 
