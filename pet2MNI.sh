@@ -60,7 +60,15 @@ echo
 
 cp $pet_path $warp_path -t  $tmp_dir
 
+
+#  decompress and reorient the files the pet file to standard space
+
+
 gunzip -f  *.nii.gz
+
+echo ++ Reorienting the PET scan to standard space
+fslreorient2std $pet_file $pet_file
+
 
 ## create the matlab batch  
 
@@ -114,7 +122,7 @@ mv tmp.m ${subject}_${tracer}_${session}_pet2mni.m
 
 cp *.m 2MNI* -t  $workdir
 cd ..
-#rm -rf $tmp_dir
+rm -rf $tmp_dir
 
 
 exit 0 
