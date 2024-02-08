@@ -58,15 +58,17 @@ echo
 
 # copy and decompressed the files 
 
-cp $warp_path -t  $tmp_dir
-
-fslreorient2std $PET_PATH ${PWD}/${pet_name}.gz
+cp $pet_path $warp_path -t  $tmp_dir
 
 
 #  decompress and reorient the files the pet file to standard space
 
+echo 
 echo ++ Reorienting the PET scan to standard space
+
 fslreorient2std ${pet_name}.gz ${pet_name}.gz
+
+echo ++ Reorienting Done!
 
 
 gunzip -f  *.nii.gz
@@ -125,7 +127,7 @@ mv tmp.m ${subject}_${tracer}_${session}_pet2mni.m
 
 cp *.m 2MNI* -t  $workdir
 cd ..
-rm -rf $tmp_dir
+# rm -rf $tmp_dir
 
 
 exit 0 
