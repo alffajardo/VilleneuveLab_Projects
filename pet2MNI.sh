@@ -58,7 +58,9 @@ echo
 
 # copy and decompressed the files 
 
-cp $pet_path $warp_path -t  $tmp_dir
+cp $warp_path -t  $tmp_dir
+
+fslreorient2std $PET_PATH ${PWD}/${pet_name}.gz
 
 
 #  decompress and reorient the files the pet file to standard space
