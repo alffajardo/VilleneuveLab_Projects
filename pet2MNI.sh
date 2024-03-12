@@ -66,16 +66,19 @@ cp $pet_path $warp_path -t  $tmp_dir
 echo 
 echo ++ Reorienting the PET scan to standard space
 
-fslreorient2std ${pet_name}.gz ${pet_name}.gz
+cp  ${pet_name}.gz tmp_${pet_name}.gz
 
 echo ++ Reorienting Done!
 
 
-gunzip -f  *.nii.gz
 
-
+mv tmp_${pet_name} ${pet_name}.gz
 
 ## create the matlab batch  
+
+
+
+gunzip *nii.gz
 
 echo "%% A matlab script to normalise to MNI space
 
