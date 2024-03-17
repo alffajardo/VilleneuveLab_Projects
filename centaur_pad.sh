@@ -15,7 +15,9 @@ echo
 echo
 echo ++ Step 1: Create a Directory for the participant $subject_id.
 	basedir=$PWD
-        subject_dir="${PWD}/outputs/${subject_id}_TAU_${session}/orig"
+        subject_dir="${PWD}/outputs_spm8
+
+/${subject_id}_TAU_${session}/orig"
 
 
 	mkdir -p $subject_dir
