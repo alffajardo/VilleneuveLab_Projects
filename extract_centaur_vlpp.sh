@@ -1,7 +1,6 @@
 #!/bin/bash
 
 sleep 0.5
-echo
 
 
 # Subject and Session
@@ -27,28 +26,58 @@ centaur_constants=${PWD}/centaur_constants.csv
 fi
 
 # Find the Centaur ROIS in the path 
-ROIS=$(find $PWD/SPM -type f -name "*vlpp.nii.gz" ! -name "*2mm")
-ref=$(find $PWD/SPM -name "voi*vlpp.nii.gz")
+ROIS=$(find $PWD/SPM -type f -name "*vlpp.nii.gz" ! -name "*1mm")
+ref=$(find $PWD/SPM -name "voi*1mm*vlpp.nii")
+
+# Create a control structure for the ROIS
+
+if [[ -z  "$ROIS" ]]; then 
+    echo -e "\033[31mError: Centaur Masks Not Found.\033[0m"
+    exit 1
+fi 
+
+# a new control structure to make sure that  the reference regions 
+if [[ -z  "$ref" ]]; then 
+    echo -e "\033[31mError: Reference Region Mask Not Found.\033[0m"
+    exit 1
+
+fi 
+
 
 ## Define the path to the prevent-ad data
 
-prevent_ad=/project/rrg-villens/dataset/PreventAD/pet/derivatives/vlpp_preproc_2022/Nov2023/vlpp_tau
+prevent_ad=/project/rrg-villens/dataset/PreventAD/pet/derivatives/vlpp_preproc_2022/Nov2023/vlpp_tau/${subject_id}_TAU_${session}
+
+## finaly just check if prevent ad directory exists 
+
+if [[ ! -d "$prevent_ad" ]]; then
+echo -e "\033[31mError: Not vlpp Sourcedir Directory Found.\033[0m"
+exit 0
+fi
+
+echo
 
 echo ++ Stage 1: Creating a Directory Subject $subject_id.
 	basedir=$PWD
-        subject_dir="${PWD}/outputs_vlpp/${subject_id}_TAU_${session}"
+    subject_dir="${PWD}/outputs_vlpp/${subject_id}_TAU_${session}" 
+    sleep 0.5
 
- # add a control structure to overwrite the files if necessary
- if [[ -d $"subject_dir" ]]; then
-    echo ++ Subject Directory Exists! Files will be overwritten.
+# add a control structure to overwrite the files if necessary
+ if [[ -d "$subject_dir" ]]; then
+    echo +++ Subject Directory Exists! Files will be overwritten.
     rm -rf $subject_dir
-    mkdir -p $subject_dir  
+    mkdir -p $subject_dir
+ else
+ mkdir -p $subject_dir
+
 fi
 
+# Search for the pet and anat and copy it to output dir
 echo +++ Searching for T1w and PET Scan For Subject $subject_id...
-	sleep 1s
-	find $prevent_ad -name "${subject_id}*${session}_T1w.nii.gz" -exec cp {} $subject_dir \;
-	find $prevent_ad -name "${subject_id}*${session}_pet.nii.gz" -exec cp {} $subject_dir \;
+sleep 0.5
+	find $prevent_ad -name "${subject_id}*${session}_T1w_space-tpl.nii.gz" -exec cp {} $subject_dir \;
+	find $prevent_ad -name "${subject_id}*${session}*pet_time-4070_space-tpl.nii.gz" -exec cp {} $subject_dir \;
+
 
 # Add a control structure to terminate the program if files are not found
 	cd $subject_dir
@@ -63,46 +92,26 @@ echo +++ Searching for T1w and PET Scan For Subject $subject_id...
 		cd $basedir
 		rm -r ${PWD}/outputs/${subject_id}_TAU_${session}
                	exit 1
-       	fi
+    fi
 
 echo ++ Stage2: Preparing The Files.
 echo +++ Reorienting Files to MNI Space
 sleep 1
 fslreorient2std $anat $anat
 fslreorient2std $pet $pet
-	echo +++ Done!!
+	echo +++ Done!
 
-# Gunzip the files
+echo ++ Stage3: Extracting  SUV and SUVr in CenTaur masks. 
 
-echo -e "\033[1;33m"
-
-	gunzip *.nii.gz
-	anat=$(ls | grep T1w)
-	pet=$(ls | grep pet)
-
-# Stage 3
-
-echo ++ Stage3: Computing SUV, SUVr and Centaur Z in masks. 
-
-# Create the csv file 
-
-echo "ID,name,SUVR,CentaurZ" > ${subject}_${session}_CenTaur_vlpp.csv
-
+echo "ID,name,SUVR,CentaurZ" > ${subject_id}_TAU_${session}_CenTaur_vlpp.csv
 
 for roi in $ROIS; do
 
     roi_name=$(basename $roi | sed 's/_vlpp.nii.gz//g')
 
-
-    # Get the slope and intercept for the equation
-
-    # Extract the row where Tracer is equal to "FTP" and store it in a variable
-
-    # Get the column number that contains the name ${roi_name}_slope
-
-    ## Extract the Slope Value
-    echo  ++ Retrieving $roi_name Centaur ROI Constants...
-    sleep 1
+## Extract the Slope Value
+    echo  +++ Retrieving $roi_name Centaur ROI Constants...
+    sleep 0.5
 
     intercept_col=$(cat $centaur_constants | head -n 1 | sed 's/,/\n/g' | cat -n | grep ${roi_name}_inter | cut -f 1) 
     intercept_val=$(cat $centaur_constants | grep FTP | cut -d ',' -f $intercept_col)
@@ -110,11 +119,11 @@ for roi in $ROIS; do
     slope_col=$(cat $centaur_constants | head -n 1 | sed 's/,/\n/g' | cat -n | grep ${roi_name}_slope | cut -f 1) 
     slope_val=$(cat $centaur_constants | grep FTP | cut -d ',' -f $slope_col)
 
-    # Start calculating the SUVr 
-    # Mask the images
+    echo +++ Computing SUVr...
+    sleep 0.5
+
     fslmaths $pet -nan -mul $roi tmp1.nii.gz
     fslmaths $pet -nan -mul $ref tmp2.nii.gz
-
 
     # Store the mean values
     roi_val=$(fslstats tmp1.nii.gz -M )
@@ -123,8 +132,7 @@ for roi in $ROIS; do
     # Calculate SUVr 
     suvr=$(echo "$roi_val / $ref_val" | bc -l)
 
-    # Calculating the Centaur Values
-    centaur=$(echo "$suvr * $slope_val + $intercept_val" | bc -l)
+     centaur=$(echo "$suvr * $slope_val + $intercept_val" | bc -l)
 
 
     sleep 0.5
@@ -134,21 +142,18 @@ for roi in $ROIS; do
     echo +++ Reference Mask: $(basename $ref)
     echo +++ Intercept: $intercept_val
     echo +++ Slope: $slope_val
-    echo +++ SUVr: $suvr
     echo +++ CenTaur Z: $centaur
     echo
     echo
-
-    sleep 1
+   
+   sleep 1
     rm tmp*.nii.gz
-    echo "$subject_dir_name,$roi_name,$suvr,$centaur" >> ${subject}_${session}_CenTaur_vlpp.csv
- 
-done 
+    echo "$subject_id,$roi_name,$suvr,$centaur" >> ${subject_id}_TAU_${session}_CenTaur_vlpp.csv
+   
+done
 
- cp ${subject}_${session}_CenTaur_vlpp.csv $basedir
+ cp ${subject_id}_TAU_${session}_CenTaur_vlpp.csv $basedir
  cd $basedir
- rm -r ${subject_dir}/tmp
-
 echo ++ FINISHED! 
-exit 0 
+exit 0   
 
