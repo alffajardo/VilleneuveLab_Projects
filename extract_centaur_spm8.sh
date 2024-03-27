@@ -119,7 +119,7 @@ for roi in $ROIS; do
     roi_val=$(fslstats tmp1.nii.gz -M )
     ref_val=$(fslstats tmp2.nii.gz -M)
 
-    # Calculate SUVr 
+    # Calculate SUVr
     suvr=$(echo "$roi_val / $ref_val" | bc -l)
 
     # Calculating the Centaur Values
@@ -128,7 +128,7 @@ for roi in $ROIS; do
 
     sleep 0.5
     echo
-    echo +++ ROI: $roi_name  
+    echo +++ ROI: $roi_name
     echo +++ Scan: $pet
     echo +++ Reference Mask: $(basename $ref)
     echo +++ Intercept: $intercept_val
@@ -138,8 +138,8 @@ for roi in $ROIS; do
     echo
     echo
 
-    sleep 1
-    rm tmp*.nii.gz
+    # sleep 1
+    #rm tmp*.nii.gz
     echo "$subject_dir_name,$roi_name,$suvr,$centaur" >> ${subject_dir_name}_CenTaur.csv
  
 done 
@@ -147,7 +147,7 @@ done
 cp  ${subject_dir_name}_CenTaur.csv ..
  cp ${subject_dir_name}_CenTaur.csv $basedir
  cd $basedir
- rm -r ${subject_dir}/tmp
+ #rm -r ${subject_dir}/tmp
 
-echo ++ FINISHED! 
-exit 0 
+echo ++ FINISHED!
+exit 0
