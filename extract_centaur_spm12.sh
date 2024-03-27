@@ -60,7 +60,7 @@ cp centaur_constants.csv  $subject_dir
 cp extract_centaur_spm12.R $subject_dir
 cd $subject_dir
  
-mv wMCALT_CenTaur.nii wMCALT_Universal_CenTauR.nii
+mv wMCALT_CenTauR.nii wMCALT_Universal_CenTauR.nii
 mv wMCALT_Meta_CenTauR.nii wMCALT_MetaTemporal_CenTauR.nii
 mv wMCALT_Mesial_CenTauR.nii wMCALT_MesialTemporal_CenTauR.nii
 mv wMCALT_TP_CenTauR.nii wMCALT_TemporoParietal_CenTauR.nii
