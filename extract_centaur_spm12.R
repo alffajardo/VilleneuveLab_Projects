@@ -32,10 +32,10 @@ centaur_constants <- centaur_constants2
 
 rm(centaur_constants2)
 
-#args <- commandArgs(trailingOnly = T)
+args <- commandArgs(trailingOnly = T)
 
-#ID <- as.character(args)[1]
-ID <- "sub-PADMTL0002_TAU_ses-01"
+ID <- as.character(args)[1]
+#ID <- "sub-PADMTL0002_TAU_ses-01"
 
 pet_string <- "_pet_avg_coregT1.nii"
 roi_string <- "wMCALT"

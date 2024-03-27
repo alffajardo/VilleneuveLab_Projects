@@ -37,7 +37,7 @@ args <- commandArgs(trailingOnly = T)
 ID <- as.character(args)[1]
 #ID <- "sub-PADMTL0001_TAU_ses-02"
 
-roi_string <- "CenTauR.nii"
+roi_string <- "_CenTauR.nii.gz"
 ref<- "voi_CerebGry_tau_2mm.nii"
 
 # Basedir directory  
@@ -47,10 +47,9 @@ ref<- "voi_CerebGry_tau_2mm.nii"
 
 # PET NAME 
 pet_name <- list.files(pattern = "^wsub.*pet_avg_coregT1MNI\\.nii$")
-roi_names <- dir(pattern = roi_string)
-
+roi_names <- dir(pattern = "*\\CenTaur.nii.gz")
+print(roi_names)
 # read the pet 
-
 # edit the roi names 
 
 roi_names2 <- roi_names %>% 
@@ -88,7 +87,7 @@ subject_data <- map(rois, ~extract_SUVr(pet_scan =  pet,
   pivot_longer(
     values_to = "SUVR", 
     names_to = "ROI", everything()) %>%
-  full_join(centaur_constants,.) %>%
+  inner_join(centaur_constants,.) %>%
   data.frame() %>%
   mutate(CenTaur_Z = Intercept + (SUVR * slope)) %>%
   add_column(.before = 1, ID =  ID)
