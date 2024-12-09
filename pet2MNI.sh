@@ -13,7 +13,7 @@ session=$3 # ses-01 or ses-02
 module load VilleneuveLab
 
 # Path to the prevent-ad root directory 
-PAD_PET="/project/rrg-villens/afajardo/PREVENT-AD_vlpp/derivatives/NAV/pad_vlpp_00mm"
+PAD_PET="/project/rrg-villens/afajardo/PREVENT-AD_vlpp/derivatives/TAU/vlpp_fwhm00mm"
 
 
 # define name of the warp file 
