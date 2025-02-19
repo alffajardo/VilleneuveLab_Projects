@@ -105,7 +105,7 @@ fi
 
 # Load apptainer
 cd $SUBJECTS_DIR
-
+echo
 echo "++ Left Hemisphere..."
 sleep 2s
 singularity exec --cleanenv \
@@ -121,8 +121,8 @@ singularity exec --cleanenv \
   --tval ${SUBJECTS_DIR}/${subject}/label/lh.Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks_order.annot
 
 echo
-echo "++ Right Hemisphere..."
 sleep 2s
+echo "++ Right Hemisphere..."
 singularity exec --cleanenv \
  -B $CBIG_CODE_DIR:$CBIG_CODE_DIR \
  -B $SUBJECTS_DIR:$SUBJECTS_DIR \
@@ -134,6 +134,39 @@ singularity exec --cleanenv \
   --trgsubject $subject \
   --sval-annot ${CBIG_CODE_DIR}/stable_projects/brain_parcellation/Schaefer2018_LocalGlobal/Parcellations/FreeSurfer5.3/$FSAVERAGE/label/rh.Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks_order.annot \
   --tval ${SUBJECTS_DIR}/${subject}/label/rh.Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks_order.annot
+  echo
+  
+  sleep 2s
+ 
+ # commands to transform the surface to volume
+  echo "++ Transforming surfaces to mgz volumes"
+  echo 
+  
+  singularity exec --cleanenv \
+  -B $CBIG_CODE_DIR:$CBIG_CODE_DIR \
+  -B $SUBJECTS_DIR:$SUBJECTS_DIR \
+  -B $license_path:/opt/freesurfer/license.txt \
+  --env SUBJECTS_DIR=$SUBJECTS_DIR \
+  $container_path \
+  mri_aparc2aseg \
+  --s $subject \
+  --o ${SUBJECTS_DIR}/${subject}/mri/Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks.mgz \
+  --annot Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks_order
 
+# Command to transform the surface to nifti
+
+ singularity exec --cleanenv \
+  -B $CBIG_CODE_DIR:$CBIG_CODE_DIR \
+  -B $SUBJECTS_DIR:$SUBJECTS_DIR \
+  -B $license_path:/opt/freesurfer/license.txt \
+  --env SUBJECTS_DIR=$SUBJECTS_DIR \
+  $container_path \
+  mri_convert \
+  ${SUBJECTS_DIR}/${subject}/mri/Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks.mgz \
+  ${SUBJECTS_DIR}/${subject}/mri/Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks.nii.gz
+  
+
+
+  
 exit
 
