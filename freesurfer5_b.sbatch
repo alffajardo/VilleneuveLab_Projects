@@ -5,7 +5,7 @@
 #SBATCH --mem-per-cpu=4G
 #SBATCH --time=16:00:00
 #SBATCH --account=def-villens
-#SBATCH --output=/lustre03/project/6079513/afajardo/GAAIN_data/CenTauR/derivatives/freesurfer/mri1/log/%x-fsbatch-%j.out
+#SBATCH --output=/lustre03/project/6079513/afajardo/GAAIN_data/CenTauR/derivatives/freesurfer/mri2/log/%x-fsbatch-%j.out
 
 # SUBJECT. Use the path to the full name of the NIFTI file, ex. sub-001_T1w.nii.gz.nii.gz
 
@@ -17,7 +17,7 @@
 
 # Path to the NIFTI T1w directory
 
- MRI_DIR=/project/rrg-villens/afajardo/GAAIN_data/CenTauR/Data/anat/mri1
+ MRI_DIR=/project/rrg-villens/afajardo/GAAIN_data/CenTauR/Data/anat/mri2
 
 
 # Define Container path and fslicense
@@ -27,7 +27,7 @@
 
 # now the subjects dir and subject id
 
- SUBJECTS_DIR=/project/rrg-villens/afajardo/GAAIN_data/CenTauR/derivatives/freesurfer/mri1
+ SUBJECTS_DIR=/project/rrg-villens/afajardo/GAAIN_data/CenTauR/derivatives/freesurfer/mri2
  subject=$1
  subjid=$(echo $subject | sed 's/.nii.gz//g')
 
