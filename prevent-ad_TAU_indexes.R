@@ -121,5 +121,6 @@ x <- data.frame(participant_id = data$participant_id,
            thresh_braak_5,
            thresh_braak_6)
 
-print(x)
+print (format (x, justify = "left"), row.names = F, quote = F)
+
 
