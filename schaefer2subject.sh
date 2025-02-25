@@ -118,7 +118,7 @@ singularity exec --cleanenv \
   --srcsubject $FSAVERAGE \
   --trgsubject $subject \
   --sval-annot ${CBIG_CODE_DIR}/stable_projects/brain_parcellation/Schaefer2018_LocalGlobal/Parcellations/FreeSurfer5.3/$FSAVERAGE/label/lh.Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks_order.annot \
-  --tval ${SUBJECTS_DIR}/${subject}/label/lh.Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks_order.annot
+  --tval ${SUBJECTS_DIR}/${subject}/label/lh.Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks_order_${FSAVERAGE}.annot
 
 echo
 sleep 2s
@@ -133,7 +133,7 @@ singularity exec --cleanenv \
   --srcsubject $FSAVERAGE \
   --trgsubject $subject \
   --sval-annot ${CBIG_CODE_DIR}/stable_projects/brain_parcellation/Schaefer2018_LocalGlobal/Parcellations/FreeSurfer5.3/$FSAVERAGE/label/rh.Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks_order.annot \
-  --tval ${SUBJECTS_DIR}/${subject}/label/rh.Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks_order.annot
+  --tval ${SUBJECTS_DIR}/${subject}/label/rh.Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks_order_${FSAVERAGE}.annot
   echo
   
   sleep 2s
