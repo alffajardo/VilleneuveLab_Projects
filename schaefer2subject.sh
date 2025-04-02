@@ -151,7 +151,7 @@ singularity exec --cleanenv \
   mri_aparc2aseg \
   --s $subject \
   --o ${SUBJECTS_DIR}/${subject}/mri/Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks.mgz \
-  --annot Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks_order
+  --annot Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks_order_${FSAVERAGE}
 
 # Command to transform the surface to nifti
 
