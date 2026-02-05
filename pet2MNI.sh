@@ -10,10 +10,14 @@ tracer=$2 # NAV or TAU
 session=$3 # ses-01 or ses-02
 
 
-module load VilleneuveLab
+module --force purge
+module load StdEnv/2020 
+export VL_QUARANTINE_DIR='/project/def-villens/quarantine'
+
+source /project/def-villens/quarantine/scripts/vl_set_vlpp_env2020
 
 # Path to the prevent-ad root directory 
-PAD_PET="/project/rrg-villens/afajardo/PREVENT-AD_vlpp/derivatives/TAU/vlpp_fwhm04mm"
+PAD_PET="/project/rrg-villens/afajardo/vlpp_test/pet2MNI"
 
 
 # define name of the warp file 

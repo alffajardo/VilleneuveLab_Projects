@@ -16,7 +16,7 @@ sleep 1s
 
 # Compulsory arguments. mak sure this is all correct before running the script
 Subject_id=$1 # Subject ID
-tracer=TAU
+tracer=NAV
 Normalized_data_dir=/scratch/afajardo/aRC_maps/pet2MNI
 
 work_dir=$PWD
