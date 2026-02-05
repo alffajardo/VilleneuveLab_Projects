@@ -118,7 +118,7 @@ singularity exec --cleanenv \
   --srcsubject $FSAVERAGE \
   --trgsubject $subject \
   --sval-annot ${CBIG_CODE_DIR}/stable_projects/brain_parcellation/Schaefer2018_LocalGlobal/Parcellations/FreeSurfer5.3/$FSAVERAGE/label/lh.Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks_order.annot \
-  --tval ${SUBJECTS_DIR}/${subject}/label/lh.Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks_order_${FSAVERAGE}.annot
+  --tval ${SUBJECTS_DIR}/${subject}_lh.Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks_order_${FSAVERAGE}.annot
 
 echo
 sleep 2s
@@ -133,7 +133,7 @@ singularity exec --cleanenv \
   --srcsubject $FSAVERAGE \
   --trgsubject $subject \
   --sval-annot ${CBIG_CODE_DIR}/stable_projects/brain_parcellation/Schaefer2018_LocalGlobal/Parcellations/FreeSurfer5.3/$FSAVERAGE/label/rh.Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks_order.annot \
-  --tval ${SUBJECTS_DIR}/${subject}/label/rh.Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks_order_${FSAVERAGE}.annot
+  --tval ${SUBJECTS_DIR}/${subject}_rh.Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks_order_${FSAVERAGE}.annot
   echo
   
   sleep 2s
@@ -150,22 +150,8 @@ singularity exec --cleanenv \
   $container_path \
   mri_aparc2aseg \
   --s $subject \
-  --o ${SUBJECTS_DIR}/${subject}/mri/Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks.mgz \
-  --annot Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks_order_${FSAVERAGE}
-
-# Command to transform the surface to nifti
-
- singularity exec --cleanenv \
-  -B $CBIG_CODE_DIR:$CBIG_CODE_DIR \
-  -B $SUBJECTS_DIR:$SUBJECTS_DIR \
-  -B $license_path:/opt/freesurfer/license.txt \
-  --env SUBJECTS_DIR=$SUBJECTS_DIR \
-  $container_path \
-  mri_convert \
-  ${SUBJECTS_DIR}/${subject}/mri/Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks.mgz \
-  ${SUBJECTS_DIR}/${subject}/mri/Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks.nii.gz
-  
-
+  --o ${SUBJECTS_DIR}/${subject}_Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks.mgz \
+  --annot ${subject}_Schaefer2018_${PARCELLS}Parcels_${NETWORKS}Networks_order
 
   
 exit
